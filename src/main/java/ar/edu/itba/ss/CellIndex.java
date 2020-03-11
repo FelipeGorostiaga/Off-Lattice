@@ -12,7 +12,6 @@ public class CellIndex {
 
     private static List<List<Particle>> cells;
 
-
     // O(N)
     public static void cellIndexAlgorithm() {
         for (List<Particle> cell : cells) {

@@ -7,68 +7,53 @@ import java.util.TreeSet;
 import static ar.edu.itba.ss.FileParser.L;
 
 
-public class Particle implements Comparable<Particle> {
+public class Particle implements Comparable<Particle>, Cloneable {
 
     private int id;
     private double x;
     private double y;
-    private double velocity;
     private double theta;
     private Set<Particle> neighbours;
     private double cellX;
     private double cellY;
 
-    public Particle(int id, double x, double y, double velocity, double theta) {
+    Particle(int id, double x, double y, double theta) {
         this.id = id;
         this.x = x;
         this.y = y;
-        this.velocity = velocity;
         this.theta = theta;
         this.neighbours = new TreeSet<>();
     }
 
-    public Particle(int id) {
-        this.id = id;
-        this.neighbours = new TreeSet<>();
-    }
-
-    public int getId() {
+    int getId() {
         return id;
     }
 
-    public void setId(int id) {
+    void setId(int id) {
         this.id = id;
     }
 
-    public double getX() {
+    double getX() {
         return x;
     }
 
-    public void setX(double x) {
+    void setX(double x) {
         this.x = x;
     }
 
-    public double getY() {
+    double getY() {
         return y;
     }
 
-    public void setY(double y) {
+    void setY(double y) {
         this.y = y;
     }
 
-    public double getVelocity() {
-        return velocity;
-    }
-
-    public void setVelocity(double velocity) {
-        this.velocity = velocity;
-    }
-
-    public double getTheta() {
+    double getTheta() {
         return theta;
     }
 
-    public void setTheta(double theta) {
+    void setTheta(double theta) {
         this.theta = theta;
     }
 
@@ -96,10 +81,6 @@ public class Particle implements Comparable<Particle> {
         this.cellY = cellY;
     }
 
-    double calculateDistance(Particle particle){
-        return Math.sqrt(Math.pow(x - particle.getX(), 2) + Math.pow(y - particle.getY(), 2));
-    }
-
     void addNeighbour(Particle neighbour){
         this.neighbours.add(neighbour);
     }
@@ -119,12 +100,15 @@ public class Particle implements Comparable<Particle> {
 
     @Override
     public String toString() {
-        return "Particle { Id = " + id +
+        return "Particle { id = " + id +
                 ", x = " + x +
                 ", y = " + y +
-                ", velocity = " + velocity +
                 ", theta = " + theta +
                 '}';
+    }
+
+    double calculateDistance(Particle particle){
+        return Math.sqrt(Math.pow(x - particle.getX(), 2) + Math.pow(y - particle.getY(), 2));
     }
 
     double calculatePeriodicDistance(Particle particle) {
@@ -140,8 +124,13 @@ public class Particle implements Comparable<Particle> {
         return Math.sqrt(Math.pow(xDistance, 2) + Math.pow(yDistance, 2));
     }
 
+    @Override
     public int compareTo(Particle particle){
         return id - particle.getId();
+    }
+
+    public Particle clone() throws CloneNotSupportedException {
+        return (Particle)super.clone();
     }
 
 }

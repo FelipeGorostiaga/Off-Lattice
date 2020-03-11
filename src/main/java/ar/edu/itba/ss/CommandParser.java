@@ -2,6 +2,9 @@ package ar.edu.itba.ss;
 
 import org.apache.commons.cli.*;
 
+import static ar.edu.itba.ss.FileParser.L;
+import static ar.edu.itba.ss.FileParser.maxRadius;
+
 public class CommandParser {
 
     static String staticFilePath;
@@ -9,6 +12,7 @@ public class CommandParser {
     static int M;
     static double RC;
     static int T;
+    static double alpha;
     static boolean periodicContour = false;
     static boolean bruteForce = false;
 
@@ -47,7 +51,13 @@ public class CommandParser {
             staticFilePath = cmd.getOptionValue("s");
 
             if(cmd.hasOption("t")) T = Integer.parseInt(cmd.getOptionValue("t"));
-            if(cmd.hasOption("m")) M = Integer.parseInt(cmd.getOptionValue("m"));
+            if(cmd.hasOption("m")) {
+                M = Integer.parseInt(cmd.getOptionValue("m"));
+                if(!checkMCondition()) {
+                    System.out.println("Invalid M parameter value! Must comply with condition {L/M > RC} ");
+                    System.exit(1);
+                }
+            }
             if(cmd.hasOption("rc")) RC = Double.parseDouble(cmd.getOptionValue("rc"));
             if(cmd.hasOption("p")) periodicContour = true;
 
@@ -55,6 +65,10 @@ public class CommandParser {
             System.out.println("Invalid command format");
             printHelp(options);
         }
+    }
+
+    private static boolean checkMCondition() {
+        return (L/M) > RC ;
     }
 
 }

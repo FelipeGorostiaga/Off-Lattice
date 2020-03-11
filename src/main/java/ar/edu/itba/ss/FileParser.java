@@ -2,6 +2,7 @@ package ar.edu.itba.ss;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
@@ -12,8 +13,10 @@ public class FileParser {
     // static file N L velocity (default = 0.03)
 
     static int N;
-    static Queue<Particle> particles = new LinkedList<>();
     static double L;
+    static double V;
+    static Queue<Particle> particles = new LinkedList<>();
+
     static double maxRadius = 0;
 
     static void parseFiles() throws Exception {
@@ -26,9 +29,7 @@ public class FileParser {
         Scanner sc = new Scanner(file);
         N = sc.nextInt();
         L = sc.nextDouble();
-        for (int i = 0; i < N; i++) {
-            particles.add(new Particle(i + 1));
-        }
+        V = sc.nextDouble();
     }
 
     private static void parseDynamicFile() throws FileNotFoundException{
@@ -39,12 +40,7 @@ public class FileParser {
             double x = sc.nextDouble();
             double y = sc.nextDouble();
             double theta = sc.nextDouble();
-            Particle particle = particles.poll();
-            particle.setX(x);
-            particle.setY(y);
-            particle.setTheta(theta);
-            particles.add(particle);
+            particles.add(new Particle(i + 1, x, y, theta));
         }
     }
-
 }
