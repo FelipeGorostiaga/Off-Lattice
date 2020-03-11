@@ -29,15 +29,19 @@ public class OffLattice {
         cosTheta /= neighbours.size();
         sinTheta /= neighbours.size();
         double newTheta = Math.atan2(sinTheta, cosTheta) + noise;
-        if (newTheta > Math.PI){
-            newTheta -= 2 * Math.PI;
-        }else if (newTheta < -Math.PI){
-            newTheta += 2 * Math.PI;
-        }
-        p.setTheta(newTheta);
+        p.setTheta(checkThetaValue(newTheta));
     }
 
     private static double getRandomNoise() {
         return alpha * (Math.random() - 1.0 / 2.0);
+    }
+
+    private static double checkThetaValue(double theta) {
+        if (theta > Math.PI){
+            theta -= 2 * Math.PI;
+        }else if (theta < -Math.PI){
+            theta += 2 * Math.PI;
+        }
+        return theta;
     }
 }
