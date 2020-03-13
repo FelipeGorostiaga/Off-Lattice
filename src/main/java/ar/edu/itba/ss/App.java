@@ -3,30 +3,24 @@ package ar.edu.itba.ss;
 
 import java.io.File;
 import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
 
-import static ar.edu.itba.ss.CellIndex.initializeCells;
-import static ar.edu.itba.ss.CellIndex.reCalculateCells;
+import static ar.edu.itba.ss.CellIndex.cellIndexAlgorithm;
+import static ar.edu.itba.ss.CellIndex.populateCells;
 import static ar.edu.itba.ss.CommandParser.T;
-import static ar.edu.itba.ss.FileParser.parseFiles;
+import static ar.edu.itba.ss.FileParser.parseDynamicFile;
 import static ar.edu.itba.ss.FileParser.particles;
+import static ar.edu.itba.ss.OffLattice.calculateNewPosition;
+import static ar.edu.itba.ss.OffLattice.calculateNewTheta;
 
 public class App {
 
     public static void main( String[] args ) {
-
-        // generate N particles (x, y, v0 = 0.03) random
-        // create cells and populate cells with particles (t = 0)
-        // [t + 1] for each particle, calculate new position(x,y) and new angle taking into account
-        // the neighbours, taking into account the r value (interaction radius)
-        // for each dt --> store values for each particle (x, y, v, angle)
-        // re-calculate particles in cell (cell index method)
-        // repeat till desired t.
-        // animate
-
         long startTime = System.currentTimeMillis();
         CommandParser.parseCommandLine(args);
         try {
-            parseFiles();
+            parseDynamicFile();
         } catch (Exception e) {
             System.out.println("Invalid file name...");
             System.exit(1);
@@ -39,16 +33,29 @@ public class App {
             System.out.println("Couldn't write output to file...");
             System.exit(1);
         }
-        // create cells
-        // populate them
-        initializeCells();
+        populateCells();
         outputToFile(writer, 0);
-        for(int i = 1 ; i < T ; i++) {
-            // recalculate new values (x,y,theta)
+        for(int i = 1 ; i <= T ; i++) {
+
+            // calculate neighbours
+            cellIndexAlgorithm();
+
+            // recalculate new values (x, y, theta)
+            Map<Particle, Double> angleMap = new HashMap<>();
+            for(Particle p : particles) {
+                calculateNewPosition(p);
+                double theta = calculateNewTheta(p);
+                angleMap.put(p, theta);
+            }
+            for(Particle p: particles) {
+                p.setTheta(angleMap.get(p));
+            }
+
             // store values in file
             outputToFile(writer, i);
+
             // recalculate new particles in cell
-            reCalculateCells();
+            populateCells();
         }
         writer.close();
         final long endTime = System.currentTimeMillis();
@@ -64,6 +71,5 @@ public class App {
             writer.print(p.getTheta());
             writer.print("\n");
         }
-
     }
 }

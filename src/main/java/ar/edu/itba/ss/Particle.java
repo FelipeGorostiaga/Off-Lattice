@@ -2,9 +2,8 @@ package ar.edu.itba.ss;
 
 import java.util.Objects;
 import java.util.Set;
-import java.util.TreeSet;
 
-import static ar.edu.itba.ss.FileParser.L;
+import static ar.edu.itba.ss.CommandParser.L;
 
 
 public class Particle implements Comparable<Particle>, Cloneable {
@@ -14,8 +13,6 @@ public class Particle implements Comparable<Particle>, Cloneable {
     private double y;
     private double theta;
     private Set<Particle> neighbours;
-    private double cellX;
-    private double cellY;
 
     Particle(int id, double x, double y, double theta) {
         this.id = id;
@@ -62,22 +59,6 @@ public class Particle implements Comparable<Particle>, Cloneable {
 
     public void setNeighbours(Set<Particle> neighbours) {
         this.neighbours = neighbours;
-    }
-
-    double getCellX() {
-        return cellX;
-    }
-
-    void setCellX(double cellX) {
-        this.cellX = cellX;
-    }
-
-    double getCellY() {
-        return cellY;
-    }
-
-    void setCellY(double cellY) {
-        this.cellY = cellY;
     }
 
     void addNeighbour(Particle neighbour){

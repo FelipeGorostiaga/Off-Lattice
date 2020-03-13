@@ -5,40 +5,18 @@ import java.util.List;
 import java.util.TreeSet;
 
 import static ar.edu.itba.ss.CommandParser.*;
-import static ar.edu.itba.ss.FileParser.L;
 import static ar.edu.itba.ss.FileParser.particles;
 
 public class CellIndex {
 
-    private static List<List<Particle>> cells;
+    static List<List<Particle>> cells;
 
-    private static List<List<Particle>> cloneCells(List<List<Particle>> cells) {
-        List<List<Particle>> clonedCells = new ArrayList<>();
-        for(List<Particle> cell: cells) {
-            List<Particle> clonedCell = new ArrayList<>();
-            for(Particle particle: cell) {
-                Particle clone = null;
-                try {
-                     clone = particle.clone();
-                } catch (CloneNotSupportedException e) {
-                    e.printStackTrace();
-                    System.out.println("Couldn't clone particles, aborting...");
-                    System.exit(1);
-                }
-                clonedCell.add(clone);
-            }
-            clonedCells.add(clonedCell);
-        }
-        return clonedCells;
-    }
-
-    // O(N)
     static void cellIndexAlgorithm() {
         for (List<Particle> cell : cells) {
             for (Particle p : cell) {
                 p.setNeighbours(new TreeSet<Particle>());
-                double cellX = p.getCellX();
-                double cellY = p.getCellY();
+                double cellX = Math.floor(p.getX() / (L / M));
+                double cellY = Math.floor(p.getY() / (L / M));
                 checkNeighbourCells(p, cellX, cellY);
                 checkNeighbourCells(p, cellX, cellY + 1);
                 checkNeighbourCells(p, cellX + 1, cellY + 1);
@@ -73,45 +51,45 @@ public class CellIndex {
                     p.addNeighbour(neighbourCellParticle);
                     neighbourCellParticle.addNeighbour(p);
                 }
+            }else {
+                // adds itself as neighbour
+                p.addNeighbour(p);
             }
         }
     }
 
-    static void initializeCells() {
-        // create matrix
+    static void populateCells() {
         cells = new ArrayList<>();
         for(int i = 0; i < (M * M) ; i++){
             cells.add(new ArrayList<Particle>());
         }
-        // populate cells with particles
         for(Particle p : particles) {
             double cellX = Math.floor(p.getX() / (L / M));
             double cellY = Math.floor(p.getY() / (L / M));
             int cellNumber = (int) (cellY * M + cellX);
             List <Particle> cell = cells.get(cellNumber);
             cell.add(p);
-            // set current cell coordinates for this particle
-            p.setCellX(cellX);
-            p.setCellY(cellY);
         }
     }
 
-
-    static void reCalculateCells() {
-        for (Particle p : particles){
-            double cellX = Math.floor(p.getX() / (L / M));
-            double cellY = Math.floor(p.getY() / (L / M));
-            int cellNumber = (int) (cellY * M + cellX);
-            int previousCellNumber = (int) (p.getCellY() * M + p.getCellX());
-            List<Particle> newCell = cells.get(cellNumber);
-            List<Particle> previousCell = cells.get(previousCellNumber);
-            if(newCell != previousCell) {
-                previousCell.remove(p);
+    static List<List<Particle>> cloneCells() {
+        List<List<Particle>> clonedCells = new ArrayList<>();
+        for(List<Particle> cell: cells) {
+            List<Particle> clonedCell = new ArrayList<>();
+            for(Particle particle: cell) {
+                Particle clone = null;
+                try {
+                    clone = particle.clone();
+                } catch (CloneNotSupportedException e) {
+                    e.printStackTrace();
+                    System.out.println("Couldn't clone particles, aborting...");
+                    System.exit(1);
+                }
+                clonedCell.add(clone);
             }
-            p.setCellX(cellX);
-            p.setCellY(cellY);
-            newCell.add(p);
+            clonedCells.add(clonedCell);
         }
+        return clonedCells;
     }
 
 }

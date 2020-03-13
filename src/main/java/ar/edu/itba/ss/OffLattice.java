@@ -2,9 +2,8 @@ package ar.edu.itba.ss;
 
 import java.util.Set;
 
-import static ar.edu.itba.ss.CommandParser.alpha;
-import static ar.edu.itba.ss.FileParser.L;
-import static ar.edu.itba.ss.FileParser.V;
+import static ar.edu.itba.ss.CommandParser.*;
+
 
 public class OffLattice {
 
@@ -17,7 +16,7 @@ public class OffLattice {
         if (p.getY() < 0) p.setY(p.getY() + L);
     }
 
-    public static void calculateNewTheta(Particle p) {
+    public static double calculateNewTheta(Particle p) {
         double noise = getRandomNoise();
         Set<Particle> neighbours = p.getNeighbours();
         double cosTheta = 0;
@@ -29,7 +28,7 @@ public class OffLattice {
         cosTheta /= neighbours.size();
         sinTheta /= neighbours.size();
         double newTheta = Math.atan2(sinTheta, cosTheta) + noise;
-        p.setTheta(checkThetaValue(newTheta));
+        return checkThetaValue(newTheta);
     }
 
     private static double getRandomNoise() {
