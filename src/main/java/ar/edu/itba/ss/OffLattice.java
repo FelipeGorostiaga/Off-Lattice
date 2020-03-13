@@ -5,9 +5,9 @@ import java.util.Set;
 import static ar.edu.itba.ss.CommandParser.*;
 
 
-public class OffLattice {
+class OffLattice {
 
-    public static void calculateNewPosition(Particle p) {
+    static void calculateNewPosition(Particle p) {
         p.setX(p.getX() + Math.cos(p.getTheta()) * V);
         p.setY(p.getY() + Math.sin(p.getTheta()) * V);
         if (p.getX() >= L) p.setX(p.getX() - L);
@@ -16,7 +16,7 @@ public class OffLattice {
         if (p.getY() < 0) p.setY(p.getY() + L);
     }
 
-    public static double calculateNewTheta(Particle p) {
+    static double calculateNewTheta(Particle p) {
         double noise = getRandomNoise();
         Set<Particle> neighbours = p.getNeighbours();
         double cosTheta = 0;

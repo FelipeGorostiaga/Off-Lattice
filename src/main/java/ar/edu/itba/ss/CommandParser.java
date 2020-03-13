@@ -14,7 +14,6 @@ class CommandParser {
     static double alpha;
     static boolean periodicContour = false;
 
-
     private static Options createOptions() {
         Options options = new Options();
         options.addOption("h", "help", false, "Show help menu");
@@ -24,6 +23,7 @@ class CommandParser {
         options.addOption("d","dynamic", true, "Dynamic file path");
         options.addOption("v","velocity", true, "Velocity of particles");
         options.addOption("rc", "radius", true, "Interaction radius");
+        options.addOption("a", "alpha", true, "Enclosed random angle noise");
         options.addOption("p", "periodic contour", false, "Activate periodic contour distance");
         return options;
     }
@@ -43,6 +43,7 @@ class CommandParser {
             if(cmd.hasOption("t")) T = Integer.parseInt(cmd.getOptionValue("t"));
             if(cmd.hasOption("l")) L = Integer.parseInt(cmd.getOptionValue("l"));
             if(cmd.hasOption("n")) N = Integer.parseInt(cmd.getOptionValue("n"));
+            if(cmd.hasOption("a")) alpha = Double.parseDouble(cmd.getOptionValue("a"));
             if(cmd.hasOption("v")) V = Double.parseDouble(cmd.getOptionValue("v"));
             if (!cmd.hasOption("d")) {
                 System.out.println("You must specify a dynamic file!");
