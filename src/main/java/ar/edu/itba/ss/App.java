@@ -31,24 +31,6 @@ public class App {
             System.out.println("Invalid file name...");
             System.exit(1);
         }
-
-        // create cells
-        // populate them
-        initializeCells();
-        outputToFile(0);
-        for(int i = 1 ; i < T ; i++) {
-            // recalculate new values (x,y,theta)
-
-            // store values in file
-            outputToFile(i);
-            // recalculate new particles in cell
-            reCalculateCells();
-        }
-        final long endTime = System.currentTimeMillis();
-        System.out.println("Total execution time: " + (endTime - startTime) + " ms");
-    }
-
-    private static void outputToFile(int time) {
         File file = new File("output.txt");
         PrintWriter writer = null;
         try {
@@ -57,6 +39,23 @@ public class App {
             System.out.println("Couldn't write output to file...");
             System.exit(1);
         }
+        // create cells
+        // populate them
+        initializeCells();
+        outputToFile(writer, 0);
+        for(int i = 1 ; i < T ; i++) {
+            // recalculate new values (x,y,theta)
+            // store values in file
+            outputToFile(writer, i);
+            // recalculate new particles in cell
+            reCalculateCells();
+        }
+        writer.close();
+        final long endTime = System.currentTimeMillis();
+        System.out.println("Total execution time: " + (endTime - startTime) + " ms");
+    }
+
+    private static void outputToFile(PrintWriter writer, int time) {
         writer.print(time);
         for (Particle p : particles) {
             writer.print(p.getId());
@@ -65,6 +64,6 @@ public class App {
             writer.print(p.getTheta());
             writer.print("\n");
         }
-        writer.close();
+
     }
 }

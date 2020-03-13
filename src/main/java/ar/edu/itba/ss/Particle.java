@@ -22,7 +22,6 @@ public class Particle implements Comparable<Particle>, Cloneable {
         this.x = x;
         this.y = y;
         this.theta = theta;
-        this.neighbours = new TreeSet<>();
     }
 
     int getId() {
