@@ -18,11 +18,8 @@ def generate_files(index, number, length):
 
 numbers = [50,100,200,300,400,500,600,700,800,900,1000,2000,3000]
 
-if (len(sys.argv) == 0):
-    length = 20
-else:
-    length = sys.argv[1]
+
 i = 0
 for x in numbers:
     i += 1
-    generate_files(i, numbers[i-1], length)
+    generate_files(i, numbers[i-1], 20)
