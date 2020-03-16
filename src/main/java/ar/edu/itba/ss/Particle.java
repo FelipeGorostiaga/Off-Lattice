@@ -6,7 +6,7 @@ import java.util.Set;
 import static ar.edu.itba.ss.FileParser.L;
 
 
-public class Particle implements Comparable<Particle>, Cloneable {
+public class Particle implements Comparable<Particle> {
 
     private int id;
     private double x;
@@ -107,10 +107,6 @@ public class Particle implements Comparable<Particle>, Cloneable {
     @Override
     public int compareTo(Particle particle){
         return id - particle.getId();
-    }
-
-    public Particle clone() throws CloneNotSupportedException {
-        return (Particle)super.clone();
     }
 
 }

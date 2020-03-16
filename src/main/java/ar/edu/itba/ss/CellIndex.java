@@ -75,25 +75,6 @@ class CellIndex {
             cell.add(p);
         }
     }
-
-    static List<List<Particle>> cloneCells() {
-        List<List<Particle>> clonedCells = new ArrayList<>();
-        for(List<Particle> cell: cells) {
-            List<Particle> clonedCell = new ArrayList<>();
-            for(Particle particle: cell) {
-                Particle clone = null;
-                try {
-                    clone = particle.clone();
-                } catch (CloneNotSupportedException e) {
-                    e.printStackTrace();
-                    System.out.println("Couldn't clone particles, aborting...");
-                    System.exit(1);
-                }
-                clonedCell.add(clone);
-            }
-            clonedCells.add(clonedCell);
-        }
-        return clonedCells;
-    }
+    
 
 }
