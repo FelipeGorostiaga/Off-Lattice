@@ -3,7 +3,7 @@ package ar.edu.itba.ss;
 import java.util.Objects;
 import java.util.Set;
 
-import static ar.edu.itba.ss.CommandParser.L;
+import static ar.edu.itba.ss.FileParser.L;
 
 
 public class Particle implements Comparable<Particle>, Cloneable {
@@ -57,7 +57,7 @@ public class Particle implements Comparable<Particle>, Cloneable {
         return neighbours;
     }
 
-    public void setNeighbours(Set<Particle> neighbours) {
+    void setNeighbours(Set<Particle> neighbours) {
         this.neighbours = neighbours;
     }
 

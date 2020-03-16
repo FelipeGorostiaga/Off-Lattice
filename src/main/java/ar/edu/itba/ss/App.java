@@ -6,15 +6,15 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
-import static ar.edu.itba.ss.CellIndex.cellIndexAlgorithm;
-import static ar.edu.itba.ss.CellIndex.populateCells;
-import static ar.edu.itba.ss.CommandParser.T;
-import static ar.edu.itba.ss.FileParser.parseDynamicFile;
-import static ar.edu.itba.ss.FileParser.particles;
+import static ar.edu.itba.ss.CellIndex.*;
+import static ar.edu.itba.ss.CommandParser.*;
+import static ar.edu.itba.ss.FileParser.*;
 import static ar.edu.itba.ss.OffLattice.calculateNewPosition;
 import static ar.edu.itba.ss.OffLattice.calculateNewTheta;
 
 public class App {
+
+    static int M;
 
     public static void main( String[] args ) {
         long startTime = System.currentTimeMillis();
@@ -25,6 +25,10 @@ public class App {
             System.out.println("Invalid file name...");
             System.exit(1);
         }
+        M = (int)Math.floor(L/RC);
+        System.out.println("Time: " + T);
+        System.out.println("M: " + M);
+        System.out.println("V: " + V);
         File file = new File("output.txt");
         PrintWriter writer = null;
         try {
@@ -63,13 +67,9 @@ public class App {
     }
 
     private static void outputToFile(PrintWriter writer, int time) {
-        writer.print(time);
+        writer.println(time);
         for (Particle p : particles) {
-            writer.print(p.getId());
-            writer.print(p.getX());
-            writer.print(p.getY());
-            writer.print(p.getTheta());
-            writer.print("\n");
+            writer.println(p.getId() + " " + p.getX() + " " + p.getY() + " " + p.getTheta());
         }
     }
 }

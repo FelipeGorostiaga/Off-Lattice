@@ -3,6 +3,7 @@ package ar.edu.itba.ss;
 import java.util.Set;
 
 import static ar.edu.itba.ss.CommandParser.*;
+import static ar.edu.itba.ss.FileParser.L;
 
 
 class OffLattice {

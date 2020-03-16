@@ -5,12 +5,10 @@ import org.apache.commons.cli.*;
 class CommandParser {
 
     static String dynamicFilePath;
-    static int M;
     static double RC;
     static int T;
-    static double L;
     static int N;
-    static double V = 0;
+    static double V = 0.03;
     static double alpha;
     static boolean periodicContour = false;
 
@@ -19,7 +17,7 @@ class CommandParser {
         options.addOption("h", "help", false, "Show help menu");
         options.addOption("t", "time", true, "Time to run simulation");
         options.addOption("n","particles", true, "Number of particles");
-        options.addOption("l","area length", true, "Length of the area");
+        //options.addOption("l","area length", true, "Length of the area");
         options.addOption("d","dynamic", true, "Dynamic file path");
         options.addOption("v","velocity", true, "Velocity of particles");
         options.addOption("rc", "radius", true, "Interaction radius");
@@ -41,7 +39,7 @@ class CommandParser {
             CommandLine cmd = parser.parse(options, args);
             if(cmd.hasOption("h")) printHelp(options);
             if(cmd.hasOption("t")) T = Integer.parseInt(cmd.getOptionValue("t"));
-            if(cmd.hasOption("l")) L = Integer.parseInt(cmd.getOptionValue("l"));
+            //if(cmd.hasOption("l")) L = Integer.parseInt(cmd.getOptionValue("l"));
             if(cmd.hasOption("n")) N = Integer.parseInt(cmd.getOptionValue("n"));
             if(cmd.hasOption("a")) alpha = Double.parseDouble(cmd.getOptionValue("a"));
             if(cmd.hasOption("v")) V = Double.parseDouble(cmd.getOptionValue("v"));
@@ -52,7 +50,7 @@ class CommandParser {
             dynamicFilePath = cmd.getOptionValue("d");
             if(cmd.hasOption("rc")) RC = Double.parseDouble(cmd.getOptionValue("rc"));
             if(cmd.hasOption("p")) periodicContour = true;
-            M = (int)Math.floor(L/RC);
+
         }catch (Exception e) {
             System.out.println("Invalid command format");
             printHelp(options);
