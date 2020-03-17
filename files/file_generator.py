@@ -1,5 +1,4 @@
 from numpy import random, pi, sin, cos
-import sys
 
 def generate_dynamic_file(number, length, name):
     f = open(name, 'w')
@@ -17,9 +16,8 @@ def generate_files(index, number, length):
     generate_dynamic_file(number, length, str(index) + '-dynamic-' + str(number) + '.ari')
 
 numbers = [50,100,200,300,400,500,600,700,800,900,1000,2000,3000]
-
-
 i = 0
+l = 20
 for x in numbers:
     i += 1
-    generate_files(i, numbers[i-1], 20)
+    generate_files(i, numbers[i-1], l)

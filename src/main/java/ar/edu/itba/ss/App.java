@@ -28,7 +28,7 @@ public class App {
         M = (int)Math.floor(L/RC);
         System.out.println("Time: " + T);
         System.out.println("M: " + M);
-        System.out.println("V: " + V);
+        System.out.println("Speed of particles: " + V);
         File file = new File("output.txt");
         PrintWriter writer = null;
         try {
@@ -40,10 +40,8 @@ public class App {
         populateCells();
         outputToFile(writer, 0);
         for(int i = 1 ; i <= T ; i++) {
-
             // calculate neighbours
             cellIndexAlgorithm();
-
             // recalculate new values (x, y, theta)
             Map<Particle, Double> angleMap = new HashMap<>();
             for(Particle p : particles) {
@@ -54,10 +52,8 @@ public class App {
             for(Particle p: particles) {
                 p.setTheta(angleMap.get(p));
             }
-
             // store values in file
             outputToFile(writer, i);
-
             // recalculate new particles in cell
             populateCells();
         }

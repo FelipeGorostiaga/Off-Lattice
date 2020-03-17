@@ -9,12 +9,22 @@ import static ar.edu.itba.ss.FileParser.L;
 class OffLattice {
 
     static void calculateNewPosition(Particle p) {
-        p.setX(p.getX() + Math.cos(p.getTheta()) * V);
-        p.setY(p.getY() + Math.sin(p.getTheta()) * V);
-        if (p.getX() >= L) p.setX(p.getX() - L);
-        if (p.getY() >= L) p.setY(p.getY() - L);
-        if (p.getX() < 0) p.setX(p.getX() + L);
-        if (p.getY() < 0) p.setY(p.getY() + L);
+        double x = p.getX() + (Math.cos(p.getTheta()) * V);
+        double y = p.getY() + (Math.sin(p.getTheta()) * V);
+        if (x >= L) {
+            x -= L;
+        }
+        if (x < 0) {
+            x += L;
+        }
+        if (y >= L) {
+            y -= L;
+        }
+        if (y < 0) {
+            y += L;
+        }
+        p.setX(x);
+        p.setY(y);
     }
 
     static double calculateNewTheta(Particle p) {
