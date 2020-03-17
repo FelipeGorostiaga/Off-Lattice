@@ -29,16 +29,16 @@ public class App {
         System.out.println("Time: " + T);
         System.out.println("M: " + M);
         System.out.println("Speed of particles: " + V);
-        File file = new File("output.txt");
-        PrintWriter writer = null;
-        try {
-            writer = new PrintWriter("output.txt", "UTF-8");
-        } catch (Exception e) {
-            System.out.println("Couldn't write output to file...");
-            System.exit(1);
-        }
+//        File file = new File("output.txt");
+//        PrintWriter writer = null;
+//        try {
+//            writer = new PrintWriter("output.txt", "UTF-8");
+//        } catch (Exception e) {
+//            System.out.println("Couldn't write output to file...");
+//            System.exit(1);
+//        }
         populateCells();
-        outputToFile(writer, 0);
+        outputToFile(0);
         for(int i = 1 ; i <= T ; i++) {
             // calculate neighbours
             cellIndexAlgorithm();
@@ -53,19 +53,29 @@ public class App {
                 p.setTheta(angleMap.get(p));
             }
             // store values in file
-            outputToFile(writer, i);
+            outputToFile(i);
             // recalculate new particles in cell
             populateCells();
         }
-        writer.close();
+
         final long endTime = System.currentTimeMillis();
         System.out.println("Total execution time: " + (endTime - startTime) + " ms");
     }
 
-    private static void outputToFile(PrintWriter writer, int time) {
-        writer.println(time);
-        for (Particle p : particles) {
-            writer.println(p.getId() + " " + p.getX() + " " + p.getY() + " " + p.getTheta());
+    private static void outputToFile(int time) {
+        File file2 = new File("./files/outputs/" + time + ".txt");
+        PrintWriter writer = null;
+        try {
+            writer = new PrintWriter(file2, "UTF-8");
+        } catch (Exception e) {
+            System.out.println("Couldn't write output to file...");
+            System.exit(1);
         }
+        writer.println(N);
+        for (Particle p : particles) {
+            writer.print("\n" + p.getId() + " " + p.getX() + " " + p.getY() + " " + Math.cos(p.getTheta()) * V + " " + Math.sin(p.getTheta()) * V);
+        }
+
+        writer.close();
     }
 }
