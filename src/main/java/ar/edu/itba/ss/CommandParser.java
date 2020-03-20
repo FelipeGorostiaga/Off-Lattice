@@ -10,7 +10,7 @@ class CommandParser {
     static int N;
     static double V = 0.03;
     static double alpha;
-    static boolean periodicContour = false;
+    static boolean periodicContour = true;
 
     private static Options createOptions() {
         Options options = new Options();
@@ -22,7 +22,7 @@ class CommandParser {
         options.addOption("v","velocity", true, "Velocity of particles");
         options.addOption("rc", "radius", true, "Interaction radius");
         options.addOption("a", "alpha", true, "Enclosed random angle noise");
-        options.addOption("p", "periodic contour", false, "Activate periodic contour distance");
+        //options.addOption("p", "periodic contour", false, "Activate periodic contour distance");
         return options;
     }
 
@@ -49,7 +49,7 @@ class CommandParser {
             }
             dynamicFilePath = cmd.getOptionValue("d");
             if(cmd.hasOption("rc")) RC = Double.parseDouble(cmd.getOptionValue("rc"));
-            if(cmd.hasOption("p")) periodicContour = true;
+            //if(cmd.hasOption("p")) periodicContour = true;
 
         }catch (Exception e) {
             System.out.println("Invalid command format");

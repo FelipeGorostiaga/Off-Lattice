@@ -14,9 +14,10 @@ function generator(N, L)
     end
 
 
-    fname = '/Users/prueba/Desktop/SS/Off-Lattice/files/dynamicFile.txt'
+    fname = '../files/dynamicFile.txt';
     fid = fopen (fname, "w");
     fprintf(fid, '%d\n', L);
     fprintf(fid, '%f %f %f\n', [x, y, thetas]');
     fclose (fid);
 end
+
